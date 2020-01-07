@@ -35,7 +35,7 @@ app.use(express.static("public"));
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
@@ -47,7 +47,6 @@ app.get("/scrape", function(req, res) {
   axios.get('https://www.sciencenews.org/topic/archaeology').then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
-
     // Grab header tag
     $(".post-item-river__content___2Ae_0").each(function(i, element) {
       // Save an empty result object
@@ -62,21 +61,23 @@ app.get("/scrape", function(req, res) {
       .children("h3")
         .children("a")
         .attr("href");
-        result.summmary = $(this)
-        .children("p")
-          .text();
+      result.summmary = $(this)
+        .children('p')
+        .text().trim();
+        console.log('summary goes here: '+ result.summmary)
 
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
           // View the added result in the console
-          console.log(dbArticle);
+          console.log(dbArticle + 'line 74');
         })
         .catch(function(err) {
           // If an error occurred, log it
-          console.log(err);
+          console.log('line 77: ' + err);
         });
-    });
+    }
+    );
 
     
     // Send a message to the client
