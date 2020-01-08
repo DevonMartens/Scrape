@@ -1,46 +1,31 @@
-//Dependencis
-​
+//Dependencisnode
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-​
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
-​
 // Require models
 var db = require("./models");
-​
 //use port 3000
 var PORT = process.env.PORT || 3000;
-​
 // Initialize Express
 var app = express();
-​
 // Configure middleware
-​
 // Use morgan logger for logging requests
 app.use(logger("dev"));
-​
 // Parse request body as JSON
 //url encoded over net/json formal
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app uses public static folder
 app.use(express.static("public"));
-​
 // Connect to the Mongo DB
-​
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines1";
-​
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-​
-​
-​
 // Routes
-​
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
@@ -51,7 +36,6 @@ app.get("/scrape", function(req, res) {
     $(".post-item-river__content___2Ae_0").each(function(i, element) {
       // Save an empty result object
       var result = {};
-​
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
       .children("h3")
@@ -65,7 +49,6 @@ app.get("/scrape", function(req, res) {
         .children('p')
         .text();
         console.log('summary goes here: '+ result.summary)
-​
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
@@ -78,17 +61,13 @@ app.get("/scrape", function(req, res) {
         });
     }
     );
-​
-    
     // Send a message to the client
     res.send("Scrape Complete!");
   });
 });
-​
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
   console.log()
- 
     // Find all results from the scrapedData collection in the db
     db.Article.find()
       // Throw any errors to the console
@@ -101,10 +80,8 @@ app.get("/articles", function(req, res) {
         res.json(err);
       });
 });
-​
 // Route for grabbing an Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
-  
   // Route finds one article using the -> req.params.id,
   // run populate method with "note",
   // respond with the article with the note included
@@ -119,10 +96,8 @@ app.get("/articles/:id", function(req, res) {
     res.json(err);
   });
 });
-​
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function(req, res) {
-​
   // save the new note that gets posted to the Notes collection
   // then find an article from the req.params.id
   // and update it's "note" property with the _id of the new note
@@ -140,7 +115,6 @@ app.post("/articles/:id", function(req, res) {
       res.json(err);
     });
 });
-​
 // Start server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
