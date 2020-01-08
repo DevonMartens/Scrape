@@ -33,7 +33,7 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines1";
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -63,7 +63,7 @@ app.get("/scrape", function(req, res) {
         .attr("href");
       result.summmary = $(this)
         .children('p')
-        .text().trim();
+        .text();
         console.log('summary goes here: '+ result.summmary)
 
       // Create a new Article using the `result` object built from scraping
@@ -87,6 +87,7 @@ app.get("/scrape", function(req, res) {
 
 // Route for getting all Articles from the db
 app.get("/articles", function(req, res) {
+  console.log()
  
     // Find all results from the scrapedData collection in the db
     db.Article.find()
