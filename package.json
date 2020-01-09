@@ -4,6 +4,7 @@
   "description": "This reposititory contains my homeowrk for Georgia Institute of Technology's coding boot camp unit 18.",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
