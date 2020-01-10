@@ -1,9 +1,9 @@
 const app = require('express').Router();
 
-var db = require("../models");
 
 var cheerio = require('cheerio');
 const axios = require('axios')
+var db = require("../models");
 // Routes
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
