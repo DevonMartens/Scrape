@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
 
-var routes = require('./routes')
+const routes = require('./routes/routes')
 
 // var axios = require("axios");
 // var cheerio = require("cheerio");
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.static("./public"));
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines1";
+var MONGODB_URI = "mongodb://heroku_mdtg5zg8:olsdi2as9i2o9fd7gtu42ai8r9@ds261648.mlab.com:61648/heroku_mdtg5zg8";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use('/', routes)
