@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 // Axios is a promised-based http library, similar to jQuery's Ajax method
 // It works on the client and on the server
 
-var routes = require('./routes/routes')
+var routes = require('./routes')
 
 // var axios = require("axios");
 // var cheerio = require("cheerio");
