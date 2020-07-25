@@ -1,6 +1,5 @@
 # Scrape
 
-This reposititory contains my homeowrk for Georgia Institute of Technology's coding boot camp unit 18.
 
 The follow node.js packages were used to create this app: express, express-handlebars, mongoose, cheerio, and axios.
 
